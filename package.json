@@ -9,6 +9,7 @@
     "lint": "eslint",
     "bootstrap": "tsx src/cli/bootstrap.ts",
     "setup:wizard": "tsx src/cli/setup.ts",
+    "service:install": "tsx src/cli/install-services.ts",
     "chat:cli": "tsx src/cli/chat.ts",
     "scheduler": "tsx src/cli/scheduler.ts"
   },

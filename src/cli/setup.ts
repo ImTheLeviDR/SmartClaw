@@ -16,6 +16,7 @@ const AUTO_YES = CLI_ARGS.has("--yes");
 const SKIP_VERCEL_PULL = CLI_ARGS.has("--skip-vercel-pull");
 const SKIP_BOOTSTRAP = CLI_ARGS.has("--skip-bootstrap");
 const SKIP_BUILD = CLI_ARGS.has("--skip-build");
+const SKIP_SERVICES = CLI_ARGS.has("--skip-services");
 
 function parseEnvKeys(contents: string): Set<string> {
   return new Set(
@@ -184,6 +185,20 @@ async function main() {
       await runCommand("pnpm", ["build"]);
     } else if (SKIP_BUILD) {
       console.log("Skipping build because --skip-build was provided.");
+    }
+
+    if (
+      process.platform === "linux" &&
+      !SKIP_SERVICES &&
+      (await askYesNo(
+        rl,
+        "Install Debian/systemd startup services so the SmartClaw web runtime and scheduler start on OS boot?",
+        true,
+      ))
+    ) {
+      await runCommand("pnpm", ["run", "service:install", "--", "--user", ...(AUTO_YES ? ["--yes"] : [])]);
+    } else if (SKIP_SERVICES) {
+      console.log("Skipping startup service installation because --skip-services was provided.");
     }
 
     console.log("");

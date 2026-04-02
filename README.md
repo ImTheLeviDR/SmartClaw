@@ -86,11 +86,12 @@ The installer:
 - installs dependencies
 - launches the guided setup wizard
 - offers to pull Vercel env vars and verify the build
+- on Debian/systemd, can install boot-start services for the web runtime and scheduler
 
 For unattended setup inside an already cloned repo:
 
 ```bash
-pnpm run setup:wizard -- --yes --skip-vercel-pull --skip-build
+pnpm run setup:wizard -- --yes --skip-vercel-pull --skip-build --skip-services
 ```
 
 ## CLI chat
@@ -130,6 +131,39 @@ These App Router endpoints are available when the matching env vars are configur
 - `/api/webhooks/teams`
 - `/api/webhooks/gchat`
 - `/api/webhooks/linear`
+
+## Start on boot
+
+Debian is the main deployment target, so SmartClaw includes systemd startup support.
+
+Install boot services manually:
+
+```bash
+pnpm run service:install -- --user
+```
+
+This installs and enables:
+
+- `smartclaw-web.service`
+- `smartclaw-scheduler.service`
+
+For user services to start at OS boot before login, enable linger:
+
+```bash
+sudo loginctl enable-linger "$USER"
+```
+
+If you want system-wide services instead of per-user services:
+
+```bash
+sudo pnpm run service:install -- --system
+```
+
+Important:
+
+- Telegram, Slack, Discord, GitHub, Teams, Google Chat, and Linear are webhook-based in this build.
+- That means “starting the bots on boot” is done by starting the SmartClaw web service on boot.
+- Those platforms also need valid credentials and a reachable public URL/webhook setup to receive events after boot.
 
 ## Notes
 
