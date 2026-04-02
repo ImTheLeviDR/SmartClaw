@@ -1,4 +1,4 @@
-import "dotenv/config";
+import "@/cli/load-env";
 
 import {
   DEFAULT_MODEL,

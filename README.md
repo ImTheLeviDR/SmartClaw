@@ -37,6 +37,7 @@ The install flow is also designed to work on other Linux distros, macOS, and Win
    ```
 
 2. Copy `.env.example` to `.env.local`.
+   The Next app and all SmartClaw CLI tools load values from `.env.local`.
 
 3. Prefer authenticating AI Gateway with Vercel OIDC:
 

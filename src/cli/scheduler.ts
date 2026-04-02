@@ -1,4 +1,4 @@
-import "dotenv/config";
+import "@/cli/load-env";
 
 import { runDueScheduledTasks } from "@/lib/scheduler";
 

@@ -1,4 +1,4 @@
-import "dotenv/config";
+import "@/cli/load-env";
 
 import { promises as fs } from "node:fs";
 import path from "node:path";
