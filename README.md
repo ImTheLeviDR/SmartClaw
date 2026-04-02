@@ -58,7 +58,7 @@ The install flow is also designed to work on other Linux distros, macOS, and Win
 Debian or Ubuntu:
 
 ```bash
-sudo apt-get update && sudo apt-get install -y git curl build-essential
+sudo apt-get update && sudo apt-get install -y git curl build-essential nodejs npm
 git clone https://github.com/ImTheLeviDR/SmartClaw
 cd SmartClaw
 corepack enable
