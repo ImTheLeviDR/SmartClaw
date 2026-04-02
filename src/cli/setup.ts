@@ -11,6 +11,54 @@ import { ensureRuntimeState } from "@/lib/store";
 
 const ENV_EXAMPLE = path.join(ROOT_DIR, ".env.example");
 const ENV_LOCAL = path.join(ROOT_DIR, ".env.local");
+const DEFAULT_ENV_TEMPLATE = `SMARTCLAW_MODEL=moonshotai/kimi-k2.5
+
+# Preferred local auth: run \`vercel env pull .env.local\`
+VERCEL_OIDC_TOKEN=
+
+# Alternative local auth for AI Gateway
+AI_GATEWAY_API_KEY=
+
+# Optional Slack adapter
+SLACK_BOT_TOKEN=
+SLACK_SIGNING_SECRET=
+SLACK_BOT_USER_ID=
+SLACK_CLIENT_ID=
+SLACK_CLIENT_SECRET=
+SLACK_ENCRYPTION_KEY=
+
+# Optional Telegram adapter
+TELEGRAM_BOT_TOKEN=
+TELEGRAM_WEBHOOK_SECRET_TOKEN=
+TELEGRAM_BOT_USERNAME=
+
+# Optional Discord adapter
+DISCORD_BOT_TOKEN=
+DISCORD_PUBLIC_KEY=
+DISCORD_APPLICATION_ID=
+
+# Optional GitHub adapter
+GITHUB_TOKEN=
+GITHUB_WEBHOOK_SECRET=
+GITHUB_APP_ID=
+GITHUB_PRIVATE_KEY=
+GITHUB_INSTALLATION_ID=
+GITHUB_BOT_USER_ID=
+
+# Optional Teams adapter
+TEAMS_APP_ID=
+TEAMS_APP_PASSWORD=
+TEAMS_APP_TENANT_ID=
+
+# Optional Google Chat adapter
+GOOGLE_CHAT_CREDENTIALS=
+GOOGLE_CHAT_USE_ADC=
+
+# Optional Linear adapter
+LINEAR_CLIENT_ID=
+LINEAR_CLIENT_SECRET=
+LINEAR_ACCESS_TOKEN=
+`;
 const CLI_ARGS = new Set(process.argv.slice(2));
 const AUTO_YES = CLI_ARGS.has("--yes");
 const SKIP_VERCEL_PULL = CLI_ARGS.has("--skip-vercel-pull");
@@ -90,10 +138,17 @@ async function askYesNo(
 }
 
 async function ensureEnvFile(): Promise<void> {
+  let template = DEFAULT_ENV_TEMPLATE;
+
+  try {
+    template = await fs.readFile(ENV_EXAMPLE, "utf8");
+  } catch {
+    await fs.writeFile(ENV_EXAMPLE, DEFAULT_ENV_TEMPLATE, "utf8");
+  }
+
   try {
     await fs.access(ENV_LOCAL);
   } catch {
-    const template = await fs.readFile(ENV_EXAMPLE, "utf8");
     await fs.writeFile(ENV_LOCAL, template, "utf8");
   }
 }
