@@ -74,6 +74,8 @@ cd SmartClaw
 bash ./install.sh
 ```
 
+If you are already inside the cloned repo, `bash ./install.sh` will now reuse the current directory instead of nesting another `SmartClaw/` folder.
+
 Windows PowerShell:
 
 ```powershell

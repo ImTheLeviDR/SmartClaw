@@ -42,7 +42,9 @@ require_cmd git
 install_node_if_possible
 require_cmd node
 
-if [ ! -d "$TARGET_DIR" ]; then
+if [ -f "./package.json" ] && [ -d "./src" ]; then
+  TARGET_DIR="."
+elif [ ! -d "$TARGET_DIR" ]; then
   git clone "$REPO_URL" "$TARGET_DIR"
 fi
 

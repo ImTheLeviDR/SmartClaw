@@ -24,6 +24,8 @@ if (-not (Test-CommandExists "node")) {
 
 if (-not (Test-Path $TargetDir)) {
   git clone $RepoUrl $TargetDir
+} elseif ((Test-Path ".\\package.json") -and (Test-Path ".\\src")) {
+  $TargetDir = "."
 }
 
 Set-Location $TargetDir
