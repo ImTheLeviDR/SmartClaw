@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "bootstrap": "tsx src/cli/bootstrap.ts",
+    "setup:wizard": "tsx src/cli/setup.ts",
     "chat:cli": "tsx src/cli/chat.ts",
     "scheduler": "tsx src/cli/scheduler.ts"
   },

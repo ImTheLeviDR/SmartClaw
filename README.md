@@ -7,6 +7,9 @@ SmartClaw is a local self-editing AI agent built with:
 - [Vercel AI Gateway](https://vercel.com/docs/ai-gateway) for model access
 - Default model: `moonshotai/kimi-k2.5`
 
+Primary target platform: Debian.
+The install flow is also designed to work on other Linux distros, macOS, and Windows where Node.js, git, and pnpm or corepack are available.
+
 ## What it does
 
 - Persists conversations on disk and keeps each thread alive over time
@@ -49,6 +52,46 @@ SmartClaw is a local self-editing AI agent built with:
    ```bash
    pnpm bootstrap
    ```
+
+## Easy install
+
+Debian or Ubuntu one-liner:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/ImTheLeviDR/SmartClaw/main/install.sh)
+```
+
+If you still need the base tools first:
+
+```bash
+sudo apt-get update && sudo apt-get install -y git curl build-essential
+```
+
+Windows PowerShell one-liner:
+
+```powershell
+powershell -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/ImTheLeviDR/SmartClaw/main/install.ps1 | iex"
+```
+
+If you are already inside the repo:
+
+```bash
+pnpm install
+pnpm run setup:wizard
+```
+
+The installer:
+
+- clones `https://github.com/ImTheLeviDR/SmartClaw`
+- installs dependencies
+- launches the guided setup wizard
+- offers to pull Vercel env vars and verify the build
+
+For unattended setup inside an already cloned repo:
+
+```bash
+pnpm run setup:wizard -- --yes --skip-vercel-pull --skip-build
+```
 
 ## CLI chat
 
@@ -93,3 +136,5 @@ These App Router endpoints are available when the matching env vars are configur
 - The agent only remembers what is in the last 30 messages plus `memory.md`.
 - Important durable information should be written into memory.
 - The source code and command tools are intentionally powerful because the agent is designed to improve itself.
+- Debian is the primary target platform for deployment and day-to-day use.
+- On this Windows/Turbopack build, the Discord adapter is left out of the compiled bot bundle because its dependency chain requires an extra native module path. The route exists, but it will return `503` until that adapter is re-enabled.
