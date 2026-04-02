@@ -55,22 +55,31 @@ The install flow is also designed to work on other Linux distros, macOS, and Win
 
 ## Easy install
 
-Debian or Ubuntu one-liner:
-
-```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/ImTheLeviDR/SmartClaw/main/install.sh)
-```
-
-If you still need the base tools first:
+Debian or Ubuntu:
 
 ```bash
 sudo apt-get update && sudo apt-get install -y git curl build-essential
+git clone https://github.com/ImTheLeviDR/SmartClaw
+cd SmartClaw
+corepack enable
+corepack prepare pnpm@latest --activate
+bash ./install.sh
 ```
 
-Windows PowerShell one-liner:
+Short version if your machine already has the prerequisites:
+
+```bash
+git clone https://github.com/ImTheLeviDR/SmartClaw
+cd SmartClaw
+bash ./install.sh
+```
+
+Windows PowerShell:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/ImTheLeviDR/SmartClaw/main/install.ps1 | iex"
+git clone https://github.com/ImTheLeviDR/SmartClaw
+cd SmartClaw
+powershell -ExecutionPolicy Bypass -File .\install.ps1
 ```
 
 If you are already inside the repo:
